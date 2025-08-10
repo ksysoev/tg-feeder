@@ -1,0 +1,6 @@
+name: Telegram Feeder
+command: feeder
+repo: github.com/ksysoev/tg-feeder 
+description: "Service for listening RSS feeds, pre-processing and publishing to telegram"
+http:
+  listen: ":8080"
