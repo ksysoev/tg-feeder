@@ -13,9 +13,9 @@ func TestSetupHandler(t *testing.T) {
 	// Create a service with mocked dependencies
 	mockTokenSvc := NewMockService(t)
 	svc := &Bot{
-		token:    "test-token",
-		tg:       NewMocktgClient(t),
-		tokenSvc: mockTokenSvc,
+		token: "test-token",
+		tg:    NewMocktgClient(t),
+		svc:   mockTokenSvc,
 	}
 
 	// Call setupHandler
@@ -74,9 +74,9 @@ func TestHandleCommand(t *testing.T) {
 			// Create a service with mocked dependencies
 			mockTokenSvc := NewMockService(t)
 			svc := &Bot{
-				token:    "test-token",
-				tg:       NewMocktgClient(t),
-				tokenSvc: mockTokenSvc,
+				token: "test-token",
+				tg:    NewMocktgClient(t),
+				svc:   mockTokenSvc,
 			}
 
 			// Setup mocks

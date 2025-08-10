@@ -42,9 +42,9 @@ func TestNew(t *testing.T) {
 func TestHandle(t *testing.T) {
 	mockTokenSvc := NewMockService(t)
 	svc := &Bot{
-		token:    "test-token",
-		tg:       NewMocktgClient(t),
-		tokenSvc: mockTokenSvc,
+		token: "test-token",
+		tg:    NewMocktgClient(t),
+		svc:   mockTokenSvc,
 	}
 
 	tests := []struct {
@@ -151,9 +151,9 @@ func TestProcessUpdate(t *testing.T) {
 	}
 
 	svc := &Bot{
-		token:    cfg.Token,
-		tg:       mockTg,
-		tokenSvc: mockTokenSvc,
+		token: cfg.Token,
+		tg:    mockTg,
+		svc:   mockTokenSvc,
 	}
 
 	svc.handler = svc

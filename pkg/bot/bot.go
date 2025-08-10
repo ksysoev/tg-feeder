@@ -10,6 +10,7 @@ import (
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"github.com/google/uuid"
+	"github.com/ksysoev/tg-feeder/pkg/core"
 )
 
 const (
@@ -28,17 +29,19 @@ type Config struct {
 	Token string `mapstructure:"token"`
 }
 
-type Service interface{}
+type Service interface {
+	AddFeed(ctx context.Context, url string) (*core.Response, error)
+}
 
 type Bot struct {
-	token    string
-	tg       tgClient
-	tokenSvc Service
-	handler  Handler
+	token   string
+	tg      tgClient
+	svc     Service
+	handler Handler
 }
 
 // New initializes a new Service with the given configuration and returns an error if the configuration is invalid.
-func New(cfg *Config, tokenSvc Service) (*Bot, error) {
+func New(cfg *Config, svc Service) (*Bot, error) {
 	if cfg == nil {
 		return nil, fmt.Errorf("config cannot be nil")
 	}
@@ -53,9 +56,9 @@ func New(cfg *Config, tokenSvc Service) (*Bot, error) {
 	}
 
 	s := &Bot{
-		token:    cfg.Token,
-		tg:       bot,
-		tokenSvc: tokenSvc,
+		token: cfg.Token,
+		tg:    bot,
+		svc:   svc,
 	}
 
 	s.handler = s.setupHandler()

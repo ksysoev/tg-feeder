@@ -17,6 +17,10 @@ type someAPIProv interface {
 	CheckHealth(ctx context.Context) error
 }
 
+type Response struct {
+	Message string `json:"message"` // Main response message
+}
+
 // Service encapsulates core business logic and dependencies.
 type Service struct {
 	users   userRepo

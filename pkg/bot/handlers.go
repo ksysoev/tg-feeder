@@ -66,6 +66,10 @@ func (s *Bot) handleCommand(ctx context.Context, msg *tgbotapi.Message) (tgbotap
 		return newTextMessage(msg.Chat.ID, welcomeMessage), nil
 	case "help":
 		return newTextMessage(msg.Chat.ID, helpMessage), nil
+	case "add":
+		_, err := s.svc.AddFeed(ctx, msg.Text)
+
+		return tgbotapi.MessageConfig{}, err
 	default:
 		return newTextMessage(msg.Chat.ID, unknownCommandMessage), nil
 	}
