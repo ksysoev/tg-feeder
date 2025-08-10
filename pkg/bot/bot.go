@@ -25,7 +25,7 @@ type tgClient interface {
 
 // Config holds the configuration for the Telegram bot
 type Config struct {
-	TelegramToken string `mapstructure:"token"`
+	Token string `mapstructure:"token"`
 }
 
 type Service interface{}
@@ -43,17 +43,17 @@ func New(cfg *Config, tokenSvc Service) (*Bot, error) {
 		return nil, fmt.Errorf("config cannot be nil")
 	}
 
-	if cfg.TelegramToken == "" {
+	if cfg.Token == "" {
 		return nil, fmt.Errorf("telegram token cannot be empty")
 	}
 
-	bot, err := tgbotapi.NewBotAPI(cfg.TelegramToken)
+	bot, err := tgbotapi.NewBotAPI(cfg.Token)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create Telegram bot: %w", err)
 	}
 
 	s := &Bot{
-		token:    cfg.TelegramToken,
+		token:    cfg.Token,
 		tg:       bot,
 		tokenSvc: tokenSvc,
 	}

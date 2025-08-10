@@ -147,11 +147,11 @@ func TestProcessUpdate(t *testing.T) {
 	mockTokenSvc := NewMockService(t)
 
 	cfg := &Config{
-		TelegramToken: "test-token",
+		Token: "test-token",
 	}
 
 	svc := &Bot{
-		token:    cfg.TelegramToken,
+		token:    cfg.Token,
 		tg:       mockTg,
 		tokenSvc: mockTokenSvc,
 	}
