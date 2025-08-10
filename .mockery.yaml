@@ -11,6 +11,10 @@ packages:
   github.com/ksysoev/tg-feeder/pkg/api:
     interfaces:
       Service:
+  github.com/ksysoev/tg-feeder/pkg/bot:
+    interfaces:
+      Service:
+      tgClient:
   github.com/ksysoev/tg-feeder/pkg/core:
     interfaces:
       userRepo:
