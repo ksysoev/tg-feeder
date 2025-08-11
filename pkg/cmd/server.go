@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/ksysoev/tg-feeder/pkg/api"
+	"github.com/ksysoev/tg-feeder/pkg/bot"
 	"github.com/ksysoev/tg-feeder/pkg/core"
 	"github.com/ksysoev/tg-feeder/pkg/prov/someapi"
 	"github.com/ksysoev/tg-feeder/pkg/repo/user"
@@ -32,12 +32,12 @@ func RunCommand(ctx context.Context, flags *cmdFlags) error {
 	userRepo := user.New(rdb)
 	svc := core.New(userRepo, someAPI)
 
-	apiSvc, err := api.New(cfg.API, svc)
+	tgBot, err := bot.New(&cfg.Bot, svc)
 	if err != nil {
 		return fmt.Errorf("failed to create API service: %w", err)
 	}
 
-	err = apiSvc.Run(ctx)
+	err = tgBot.Run(ctx)
 	if err != nil {
 		return fmt.Errorf("failed to run API service: %w", err)
 	}

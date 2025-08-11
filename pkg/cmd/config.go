@@ -5,13 +5,13 @@ import (
 	"log/slog"
 	"strings"
 
-	"github.com/ksysoev/tg-feeder/pkg/api"
+	"github.com/ksysoev/tg-feeder/pkg/bot"
 	"github.com/ksysoev/tg-feeder/pkg/prov/someapi"
 	"github.com/spf13/viper"
 )
 
 type appConfig struct {
-	API      api.Config  `mapstructure:"api"`
+	Bot      bot.Config  `mapstructure:"bot"`
 	Redis    RedisConfig `mapstructure:"redis"`
 	Provider Provider    `mapstructure:"provider"`
 }

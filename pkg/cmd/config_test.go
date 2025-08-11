@@ -5,7 +5,6 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/ksysoev/tg-feeder/pkg/api"
 	"github.com/ksysoev/tg-feeder/pkg/prov/someapi"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -13,8 +12,6 @@ import (
 
 func TestLoadConfig(t *testing.T) {
 	const validConfig = `
-api:
-  listen: ":8082"
 redis:
   addr: "localhost:6379"
   password: "testpassword"
@@ -36,9 +33,6 @@ provider:
 			expectError: false,
 			configData:  validConfig,
 			expectConfig: &appConfig{
-				API: api.Config{
-					Listen: ":8082",
-				},
 				Redis: RedisConfig{
 					Addr:     "localhost:6379",
 					Password: "testpassword",
@@ -64,15 +58,11 @@ provider:
 		{
 			name: "valid config with environment overrides",
 			envVars: map[string]string{
-				"API_LISTEN":                 ":8083",
 				"PROVIDER_SOME_API_BASE_URL": "https://test.com",
 			},
 			expectError: false,
 			configData:  validConfig,
 			expectConfig: &appConfig{
-				API: api.Config{
-					Listen: ":8083",
-				},
 				Redis: RedisConfig{
 					Addr:     "localhost:6379",
 					Password: "testpassword",
