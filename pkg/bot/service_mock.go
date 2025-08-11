@@ -24,12 +24,12 @@ func (_m *MockService) EXPECT() *MockService_Expecter {
 	return &MockService_Expecter{mock: &_m.Mock}
 }
 
-// AddFeed provides a mock function with given fields: ctx, url
-func (_m *MockService) AddFeed(ctx context.Context, url string) (*core.Response, error) {
+// Summary provides a mock function with given fields: ctx, url
+func (_m *MockService) Summary(ctx context.Context, url string) (*core.Response, error) {
 	ret := _m.Called(ctx, url)
 
 	if len(ret) == 0 {
-		panic("no return value specified for AddFeed")
+		panic("no return value specified for Summary")
 	}
 
 	var r0 *core.Response
@@ -54,31 +54,31 @@ func (_m *MockService) AddFeed(ctx context.Context, url string) (*core.Response,
 	return r0, r1
 }
 
-// MockService_AddFeed_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'AddFeed'
-type MockService_AddFeed_Call struct {
+// MockService_Summary_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'Summary'
+type MockService_Summary_Call struct {
 	*mock.Call
 }
 
-// AddFeed is a helper method to define mock.On call
+// Summary is a helper method to define mock.On call
 //   - ctx context.Context
 //   - url string
-func (_e *MockService_Expecter) AddFeed(ctx interface{}, url interface{}) *MockService_AddFeed_Call {
-	return &MockService_AddFeed_Call{Call: _e.mock.On("AddFeed", ctx, url)}
+func (_e *MockService_Expecter) Summary(ctx interface{}, url interface{}) *MockService_Summary_Call {
+	return &MockService_Summary_Call{Call: _e.mock.On("Summary", ctx, url)}
 }
 
-func (_c *MockService_AddFeed_Call) Run(run func(ctx context.Context, url string)) *MockService_AddFeed_Call {
+func (_c *MockService_Summary_Call) Run(run func(ctx context.Context, url string)) *MockService_Summary_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		run(args[0].(context.Context), args[1].(string))
 	})
 	return _c
 }
 
-func (_c *MockService_AddFeed_Call) Return(_a0 *core.Response, _a1 error) *MockService_AddFeed_Call {
+func (_c *MockService_Summary_Call) Return(_a0 *core.Response, _a1 error) *MockService_Summary_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockService_AddFeed_Call) RunAndReturn(run func(context.Context, string) (*core.Response, error)) *MockService_AddFeed_Call {
+func (_c *MockService_Summary_Call) RunAndReturn(run func(context.Context, string) (*core.Response, error)) *MockService_Summary_Call {
 	_c.Call.Return(run)
 	return _c
 }

@@ -30,7 +30,7 @@ type Config struct {
 }
 
 type Service interface {
-	AddFeed(ctx context.Context, url string) (*core.Response, error)
+	Summary(ctx context.Context, url string) (*core.Response, error)
 }
 
 type Bot struct {
