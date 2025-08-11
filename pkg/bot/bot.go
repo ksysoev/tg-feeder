@@ -34,10 +34,10 @@ type Service interface {
 }
 
 type Bot struct {
-	token   string
 	tg      tgClient
 	svc     Service
 	handler Handler
+	token   string
 }
 
 // New initializes a new Service with the given configuration and returns an error if the configuration is invalid.
@@ -71,7 +71,7 @@ func (s *Bot) processUpdate(ctx context.Context, update *tgbotapi.Update) {
 		return
 	}
 
-	// nolint:staticcheck // don't want to have dependency on cmd package here for now
+	//nolint:staticcheck // don't want to have dependency on cmd package here for now
 	ctx = context.WithValue(ctx, "chat_id", fmt.Sprintf("%d", update.Message.Chat.ID))
 
 	msg := update.Message
@@ -91,6 +91,7 @@ func (s *Bot) processUpdate(ctx context.Context, update *tgbotapi.Update) {
 		slog.ErrorContext(ctx, "Unexpected error",
 			slog.Any("error", err),
 		)
+
 		return
 	}
 
@@ -98,6 +99,7 @@ func (s *Bot) processUpdate(ctx context.Context, update *tgbotapi.Update) {
 	if msgConfig.Text == "" {
 		return
 	}
+
 	cancel()
 
 	// Send response
@@ -132,7 +134,7 @@ func (s *Bot) Run(ctx context.Context) error {
 
 				reqCtx, cancel := context.WithTimeout(ctx, requestTimeout)
 
-				// nolint:staticcheck // don't want to have dependecy on cmd package here for now
+				//nolint:staticcheck // don't want to have dependecy on cmd package here for now
 				reqCtx = context.WithValue(reqCtx, "req_id", uuid.New().String())
 
 				defer cancel()
@@ -146,6 +148,7 @@ func (s *Bot) Run(ctx context.Context) error {
 
 			// Wait for ongoing message processors with a timeout
 			done := make(chan struct{})
+
 			go func() {
 				wg.Wait()
 				close(done)

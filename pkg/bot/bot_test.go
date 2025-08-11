@@ -11,8 +11,8 @@ import (
 
 func TestNew(t *testing.T) {
 	tests := []struct {
-		name    string
 		cfg     *Config
+		name    string
 		wantErr bool
 	}{
 		{
@@ -126,6 +126,7 @@ func TestHandle(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			mockTokenSvc.ExpectedCalls = nil
+
 			tt.setupMocks()
 
 			msg, err := svc.Handle(context.Background(), tt.message)
@@ -135,6 +136,7 @@ func TestHandle(t *testing.T) {
 			}
 
 			assert.NoError(t, err)
+
 			if tt.wantText != "" {
 				assert.Equal(t, tt.wantText, msg.Text)
 			}
@@ -159,9 +161,9 @@ func TestProcessUpdate(t *testing.T) {
 	svc.handler = svc
 
 	tests := []struct {
-		name       string
 		update     *tgbotapi.Update
 		setupMocks func()
+		name       string
 	}{
 		{
 			name: "nil message",
@@ -200,6 +202,7 @@ func TestProcessUpdate(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			mockTg.ExpectedCalls = nil
 			mockTokenSvc.ExpectedCalls = nil
+
 			tt.setupMocks()
 
 			svc.processUpdate(context.Background(), tt.update)

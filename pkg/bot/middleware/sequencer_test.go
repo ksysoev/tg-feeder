@@ -23,17 +23,21 @@ func TestWithRequestSequencerLimitsPerUserProcessing(t *testing.T) {
 		userID := msg.From.ID
 
 		mu.Lock()
+
 		activeUserCounts[userID]++
 		if activeUserCounts[userID] > maxUserCounts[userID] {
 			maxUserCounts[userID] = activeUserCounts[userID]
 		}
+
 		mu.Unlock()
 
 		// Simulate work
 		time.Sleep(50 * time.Millisecond)
 
 		mu.Lock()
+
 		activeUserCounts[userID]--
+
 		mu.Unlock()
 
 		return tgbotapi.MessageConfig{}, nil
@@ -47,8 +51,10 @@ func TestWithRequestSequencerLimitsPerUserProcessing(t *testing.T) {
 	for _, userID := range userIDs {
 		for i := 0; i < 5; i++ {
 			wg.Add(1)
+
 			go func(id int64) {
 				defer wg.Done()
+
 				msg := &tgbotapi.Message{
 					From: &tgbotapi.User{ID: id},
 				}
@@ -84,8 +90,10 @@ func TestWithRequestSequencerHandlesContextCancellation(t *testing.T) {
 	// Fill up the sequencer for this user
 	var wg sync.WaitGroup
 	wg.Add(1)
+
 	go func() {
 		defer wg.Done()
+
 		msg := &tgbotapi.Message{
 			From: &tgbotapi.User{ID: userID},
 		}
@@ -102,10 +110,12 @@ func TestWithRequestSequencerHandlesContextCancellation(t *testing.T) {
 	msg := &tgbotapi.Message{
 		From: &tgbotapi.User{ID: userID},
 	}
+
 	_, err := sequenced.Handle(ctx, msg)
 	if err == nil {
 		t.Error("expected error when context is cancelled, got nil")
 	}
+
 	if err != nil && !errors.Is(err, context.Canceled) {
 		t.Errorf("expected context.Canceled error, got %v", err)
 	}
@@ -122,13 +132,14 @@ func TestWithRequestSequencerHandlerError(t *testing.T) {
 	})
 
 	sequenced := WithRequestSequencer()(handler)
+
 	_, err := sequenced.Handle(context.Background(), &tgbotapi.Message{
 		From: &tgbotapi.User{ID: 123},
 	})
-
 	if err == nil {
 		t.Error("expected error from handler, got nil")
 	}
+
 	if err != expectedErr {
 		t.Errorf("expected error %v, got %v", expectedErr, err)
 	}
@@ -140,8 +151,8 @@ func TestWithRequestSequencerNilMessage(t *testing.T) {
 	})
 
 	sequenced := WithRequestSequencer()(handler)
-	_, err := sequenced.Handle(context.Background(), nil)
 
+	_, err := sequenced.Handle(context.Background(), nil)
 	if err == nil {
 		t.Error("expected error for nil message, got nil")
 	}
@@ -153,8 +164,8 @@ func TestWithRequestSequencerNilUser(t *testing.T) {
 	})
 
 	sequenced := WithRequestSequencer()(handler)
-	_, err := sequenced.Handle(context.Background(), &tgbotapi.Message{})
 
+	_, err := sequenced.Handle(context.Background(), &tgbotapi.Message{})
 	if err == nil {
 		t.Error("expected error for nil user, got nil")
 	}

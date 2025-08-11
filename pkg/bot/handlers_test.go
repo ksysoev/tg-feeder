@@ -27,12 +27,12 @@ func TestSetupHandler(t *testing.T) {
 
 func TestHandleCommand(t *testing.T) {
 	tests := []struct {
+		setupMocks func(mockTokenSvc *MockService)
 		name       string
 		command    string
-		setupMocks func(mockTokenSvc *MockService)
+		wantText   string
 		chatID     int64
 		userID     int64
-		wantText   string
 		wantErr    bool
 	}{
 		{
@@ -108,6 +108,7 @@ func TestHandleCommand(t *testing.T) {
 				assert.Error(t, err)
 				return
 			}
+
 			require.NoError(t, err)
 
 			// Check response

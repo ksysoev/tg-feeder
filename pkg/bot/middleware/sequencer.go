@@ -30,13 +30,16 @@ func WithRequestSequencer() Middleware {
 
 			// Get or create a queue for this user
 			mu.Lock()
+
 			queue, exists := userQueues[userID]
 			if !exists {
 				// First request for this user, create a channel and signal it's ready to process
 				queue = make(chan struct{}, 1)
 				queue <- struct{}{} // Signal that it's ready to process
+
 				userQueues[userID] = queue
 			}
+
 			mu.Unlock()
 
 			// Try to acquire the lock or wait for context cancellation
@@ -57,11 +60,13 @@ func WithRequestSequencer() Middleware {
 							delete(userQueues, userID)
 						}
 					}
+
 					mu.Unlock()
 				}()
 
 				// Process the message
 				resp, err := next.Handle(ctx, message)
+
 				return resp, err
 			case <-ctx.Done():
 				// Context was cancelled while waiting for our turn

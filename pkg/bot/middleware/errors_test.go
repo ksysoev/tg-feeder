@@ -99,7 +99,6 @@ func TestWithErrorHandling(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-
 			handler := WithErrorHandling()(tt.handler)
 			msgConfig, err := handler.Handle(context.Background(), tt.message)
 

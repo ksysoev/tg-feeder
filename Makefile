@@ -10,6 +10,9 @@ test: ## Run unit tests with race detector
 lint: ## Run golangci-lint
 	golangci-lint run
 
+fixlint: ## Run golangci-lint and fix issues
+	golangci-lint run --fix
+
 mocks: ## Generate mocks using mockery
 	mockery
 

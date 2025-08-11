@@ -47,6 +47,7 @@ func (s *Bot) setupHandler() Handler {
 // Handle processes incoming telegram messages, handles commands, text messages, and generates appropriate responses.
 func (s *Bot) Handle(ctx context.Context, msg *tgbotapi.Message) (tgbotapi.MessageConfig, error) {
 	slog.DebugContext(ctx, "Handling message", slog.Any("message", msg))
+
 	if msg.Command() != "" {
 		resp, err := s.handleCommand(ctx, msg)
 		if err != nil {

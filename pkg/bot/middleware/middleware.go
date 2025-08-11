@@ -37,5 +37,6 @@ func Use(handler Handler, middlewares ...Middleware) Handler {
 	for _, middleware := range middlewares {
 		handler = middleware(handler)
 	}
+
 	return handler
 }
