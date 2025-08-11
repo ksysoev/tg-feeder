@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	welcomeMessage = `Wel`
+	welcomeMessage = `👋 Welcome! I am your helpful Telegram bot. Use /help to see what I can do.`
 	helpMessage    = `Available Commands:
 
 /start - Show welcome message
