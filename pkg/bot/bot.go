@@ -76,14 +76,8 @@ func (s *Bot) processUpdate(ctx context.Context, update *tgbotapi.Update) {
 
 	msg := update.Message
 
-	var wg sync.WaitGroup
-	defer wg.Wait()
-
 	ctx, cancel := context.WithCancel(ctx)
 	defer cancel()
-
-	wg.Add(1)
-	defer wg.Done() // Ensure wg.Done() is called when the function returns
 
 	msgConfig, err := s.handler.Handle(ctx, msg)
 
