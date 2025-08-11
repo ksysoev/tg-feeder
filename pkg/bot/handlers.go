@@ -6,7 +6,7 @@ import (
 	"log/slog"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
-	"github.com/ksysoev/make-it-public-tgbot/pkg/bot/middleware"
+	"github.com/ksysoev/tg-feeder/pkg/bot/middleware"
 )
 
 const (
