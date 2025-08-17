@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"github.com/ksysoev/tg-feeder/pkg/bot"
-	"github.com/ksysoev/tg-feeder/pkg/prov/someapi"
+	"github.com/ksysoev/tg-feeder/pkg/prov/crawler"
 	"github.com/spf13/viper"
 )
 
@@ -22,7 +22,7 @@ type RedisConfig struct {
 }
 
 type Provider struct {
-	SomeAPI someapi.Config `mapstructure:"some_api"`
+	SomeAPI crawler.Config `mapstructure:"crawler"`
 }
 
 // loadConfig loads the application configuration from the specified file path and environment variables.
