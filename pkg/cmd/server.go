@@ -6,7 +6,7 @@ import (
 
 	"github.com/ksysoev/tg-feeder/pkg/bot"
 	"github.com/ksysoev/tg-feeder/pkg/core"
-	"github.com/ksysoev/tg-feeder/pkg/prov/someapi"
+	"github.com/ksysoev/tg-feeder/pkg/prov/crawler"
 	"github.com/ksysoev/tg-feeder/pkg/repo/user"
 	"github.com/redis/go-redis/v9"
 )
@@ -28,9 +28,9 @@ func RunCommand(ctx context.Context, flags *cmdFlags) error {
 		Password: cfg.Redis.Password,
 	})
 
-	someAPI := someapi.New(cfg.Provider.SomeAPI)
+	crawlerProv := crawler.New(cfg.Provider.SomeAPI)
 	userRepo := user.New(rdb)
-	svc := core.New(userRepo, someAPI)
+	svc := core.New(userRepo, crawlerProv)
 
 	tgBot, err := bot.New(&cfg.Bot, svc)
 	if err != nil {
